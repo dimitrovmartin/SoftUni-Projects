@@ -2,6 +2,8 @@ CREATE DATABASE Relations
 
 USE Relations
 
+--1.One-To-One Relationship
+
 CREATE TABLE Passports
 (
 	PassportID INT PRIMARY KEY IDENTITY (101,1),
@@ -28,6 +30,7 @@ VALUES
 ('Tom', 56100.00, 103),
 ('Yana', 60200.00, 101)
 
+--2.One-To-Many Relationship
 
 CREATE TABLE Manufacturers
 (
@@ -57,6 +60,8 @@ VALUES
 ('Model X',	2),
 ('Model 3',	2),
 ('Nova',	3)
+
+--3.Many-To-Many Relationship
 
 CREATE TABLE Students
 (
@@ -99,6 +104,8 @@ VALUES
 	(2,	102),
 	(2,	103)
 
+--4.Self-Referencing 
+
 CREATE TABLE Teachers
 (
 	TeacherID INT PRIMARY KEY IDENTITY(101,1),
@@ -114,6 +121,8 @@ VALUES
 	('Ted',		105	),
 	('Mark',	101	),
 	('Greta',	101	)
+
+--5.Online Store Database
 
 CREATE TABLE Cities
 (
@@ -156,6 +165,8 @@ CREATE TABLE OrderItems
 	CONSTRAINT PK_OrderID_ItemID PRIMARY KEY(OrderID, ItemID)
 )
 
+--6.University Database
+
 CREATE DATABASE UniversityDB
 
 USE UniversityDB
@@ -195,6 +206,8 @@ CREATE TABLE Agenda
 
 	CONSTRAINT PK_StudentID_SubjectID PRIMARY KEY(StudentID, SubjectID)
 )
+
+--9.*Peaks in Rila
 
 USE Geography
 
