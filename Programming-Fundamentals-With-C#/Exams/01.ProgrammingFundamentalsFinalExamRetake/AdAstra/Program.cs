@@ -36,7 +36,7 @@ namespace AdAstra
 
             List<Product> products = new List<Product>();
 
-            string pattern = @"(\||#)([A-Za-z\s]+)\1(\d{2}\/\d{2}\/\d{2})\1(\d+)\1";
+            string pattern = @"(\||#)([A-Za-z\s]+)\1(\d{2}\/\d{2}\/\d{2})\1(\d{1,5})\1";
 
             Regex regex = new Regex(pattern);
 
