@@ -17,7 +17,9 @@ namespace SoftUniParking
         }
 
         public int Capacity { get => capacity; set => capacity = value; }
+
         public List<Car> Cars { get => cars; set => cars = value; }
+
         public int Count => this.Cars.Count();
 
         public string AddCar(Car car)
@@ -33,6 +35,7 @@ namespace SoftUniParking
             else
             {
                 cars.Add(car);
+
                 return  $"Successfully added new car {car.Make} {car.RegistrationNumber}";
             }
         }
@@ -46,6 +49,7 @@ namespace SoftUniParking
             else
             {
                 Car car = cars.First(c => c.RegistrationNumber == registrationNumber);
+
                 cars.Remove(car);
 
                 return $"Successfully removed {registrationNumber}";
@@ -54,7 +58,7 @@ namespace SoftUniParking
         
         public Car GetCar(string registrationNumber)
         {
-            Car car = cars.First(c => c.RegistrationNumber == registrationNumber);
+            Car car = cars.FirstOrDefault(c => c.RegistrationNumber == registrationNumber);
 
             return car;
         }
@@ -63,12 +67,7 @@ namespace SoftUniParking
         {
             foreach (var registrationNumber in registrationNumbers)
             {
-                if (cars.Any(c => c.RegistrationNumber == registrationNumber))
-                {
-                    Car car = cars.First(c => c.RegistrationNumber == registrationNumber);
-
-                    cars.Remove(car);
-                }
+                cars.RemoveAll(c => c.RegistrationNumber == registrationNumber);
             }
         }
     }
