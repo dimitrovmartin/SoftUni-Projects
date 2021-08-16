@@ -30,8 +30,6 @@
             }
         }
 
-      
-
         public int Count { get; private set; }
 
         public void Add(T item)
@@ -42,9 +40,7 @@
 
             Count++;
         }
-
         
-
         public bool Contains(T item)
         {
             for (int i = 0; i < Count; i++)
@@ -82,9 +78,7 @@
 
             Count++;
         }
-
-       
-
+        
         public bool Remove(T item)
         {
             for (int i = 0; i < Count; i++)
@@ -101,9 +95,7 @@
 
             return false;
         }
-
         
-
         public void RemoveAt(int index)
         {
             IsValidIndex(index);
@@ -150,6 +142,7 @@
 
             arr = arrCopy;
         }
+        
         private void ShiftRight(int index)
         {
             for (int i = Count; i >= index; i--)
