@@ -23,7 +23,6 @@
                 Copy(root.LeftChild);
                 Copy(root.RightChild);
             }
-
         }
 
         public Node<T> Root { get; private set; }
@@ -207,6 +206,7 @@
         {
             return firstValue.CompareTo(secondValue) > 0;
         }
+        
         private bool IsLess(T firstValue, T secondValue)
         {
             return firstValue.CompareTo(secondValue) < 0;
