@@ -48,14 +48,10 @@
             return list;
         }
 
-       
-
         public List<IAbstractBinaryTree<T>> PreOrder()
         {
             return DfsPreOrder(this);
         }
-
-       
 
         public void ForEachInOrder(Action<T> action)
         {
