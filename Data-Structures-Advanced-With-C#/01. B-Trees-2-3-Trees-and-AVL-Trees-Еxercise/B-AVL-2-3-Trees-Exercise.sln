@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02.Two-Three", "02.Two-Thre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02.Two-Three.Tests", "02.Two-Three.Tests\02.Two-Three.Tests.csproj", "{B8EB8E38-D6DF-422E-8D96-776DAB07CB78}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03.AVL", "03.AVL\03.AVL.csproj", "{27B3F01D-A189-497F-A893-C31F71E1AC57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B8EB8E38-D6DF-422E-8D96-776DAB07CB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8EB8E38-D6DF-422E-8D96-776DAB07CB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8EB8E38-D6DF-422E-8D96-776DAB07CB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B3F01D-A189-497F-A893-C31F71E1AC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B3F01D-A189-497F-A893-C31F71E1AC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B3F01D-A189-497F-A893-C31F71E1AC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B3F01D-A189-497F-A893-C31F71E1AC57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
