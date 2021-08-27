@@ -15,6 +15,86 @@ namespace ADO.NET
             }
         }
 
+        private static void AddMinion(SqlConnection connection)
+        {
+            string[] minionData = Console.ReadLine()
+                                .Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+            string minionName = minionData[1];
+            int minionAge = int.Parse(minionData[2]);
+            string minionCity = minionData[3];
+
+            string villainName = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)[1];
+
+            SqlCommand command = new SqlCommand($"SELECT COUNT(*) FROM Towns WHERE Name = @townName", connection);
+            command.Parameters.Add(new SqlParameter(@"townName", minionCity));
+
+            int count = (int)command.ExecuteScalar();
+
+            if (count == 0)
+            {
+                command = new SqlCommand("INSERT INTO Towns (Name) VALUES (@townName)", connection);
+                command.Parameters.Add(new SqlParameter(@"townName", minionCity));
+
+                command.ExecuteNonQuery();
+
+                Console.WriteLine($"Town {minionCity} was added to the database.");
+            }
+
+            command = new SqlCommand($"SELECT COUNT(*) FROM Villains WHERE Name = @Name", connection);
+            command.Parameters.Add(new SqlParameter("@Name", villainName));
+
+            count = (int)command.ExecuteScalar();
+
+            if (count == 0)
+            {
+                command = new SqlCommand("INSERT INTO Villains (Name, EvilnessFactorId)  VALUES (@villainName, 4)", connection);
+                command.Parameters.Add(new SqlParameter(@"villainName", villainName));
+
+                command.ExecuteNonQuery();
+
+                Console.WriteLine($"Villain {villainName} was added to the database.");
+            }
+
+            command = new SqlCommand("SELECT Id FROM Towns WHERE Name = @townName", connection);
+            command.Parameters.Add(new SqlParameter("@townName", minionCity));
+            int townId = (int)command.ExecuteScalar();
+
+            command = new SqlCommand("SELECT Id FROM Villains WHERE Name = @Name", connection);
+            command.Parameters.Add(new SqlParameter(@"Name", villainName));
+            int villainId = (int)command.ExecuteScalar();
+
+            command = new SqlCommand($"SELECT COUNT(*) FROM Minions WHERE Name = @Name", connection);
+            command.Parameters.Add(new SqlParameter("@Name", minionName));
+
+            count = (int)command.ExecuteScalar();
+
+            if (count == 0)
+            {
+                command = new SqlCommand("INSERT INTO Minions (Name, Age, TownId) VALUES (@nam, @age, @townId)", connection);
+
+                command.Parameters.Add(new SqlParameter("@nam", minionName));
+                command.Parameters.Add(new SqlParameter("@age", minionAge));
+                command.Parameters.Add(new SqlParameter("@townId", townId));
+
+                command.ExecuteNonQuery();
+            }
+
+            command = new SqlCommand("SELECT Id FROM Minions WHERE Name = @Name", connection);
+            command.Parameters.Add(new SqlParameter(@"Name", minionName));
+            int minionId = (int)command.ExecuteScalar();
+
+            command = new SqlCommand("INSERT INTO MinionsVillains (MinionId, VillainId) VALUES (@villainId, @minionId)", connection);
+
+            command.Parameters.Add(new SqlParameter("@villainId", villainId));
+            command.Parameters.Add(new SqlParameter("@minionId", minionId));
+
+            command.ExecuteNonQuery();
+
+            Console.WriteLine($"Successfully added {minionName} to be minion of {villainName}.");
+        }
+
         private static void MinionNames(SqlConnection connection) 
         {
             string id = Console.ReadLine();
