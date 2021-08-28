@@ -27,11 +27,12 @@ namespace ADO.NET
 
             command = new SqlCommand($"SELECT Name, Age FROM Minions WHERE Id = {id}", connection);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                Console.WriteLine($"{reader[0]} - {reader[1]} years old");
+                while (reader.Read())
+                {
+                    Console.WriteLine($"{reader[0]} - {reader[1]} years old");
+                }
             }
         }
 
@@ -59,11 +60,12 @@ namespace ADO.NET
 
             command = new SqlCommand("SELECT Name, Age FROM Minions", connection);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                minionNames.Add(reader[0].ToString() + " " + reader[1].ToString());
+                while (reader.Read())
+                {
+                    minionNames.Add(reader[0].ToString() + " " + reader[1].ToString());
+                }
             }
 
             Console.WriteLine(string.Join(Environment.NewLine, minionNames));
@@ -75,11 +77,12 @@ namespace ADO.NET
 
             SqlCommand command = new SqlCommand("SELECT Name FROM Minions", connection);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                minionNames.Add(reader[0].ToString());
+                while (reader.Read())
+                {
+                    minionNames.Add(reader[0].ToString());
+                }
             }
 
             int counter = 0;
@@ -163,14 +166,15 @@ namespace ADO.NET
   WHERE c.Name = @countryName", connection);
 
                 command.Parameters.Add(new SqlParameter("@countryName", country));
-
-                SqlDataReader reader = command.ExecuteReader();
-
+               
                 List<string> towns = new List<string>();
 
-                while (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    towns.Add(reader[0].ToString());
+                    while (reader.Read())
+                    {
+                        towns.Add(reader[0].ToString());
+                    }
                 }
 
                 Console.WriteLine($"[{string.Join(", ", towns)}]");
@@ -291,16 +295,16 @@ namespace ADO.NET
                                 ORDER BY m.Name", connection);
 
             command.Parameters.Add(new SqlParameter("@Id", id));
-
-            SqlDataReader reader = command.ExecuteReader();
-
             int counter = 0;
 
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                counter++;
+                while (reader.Read())
+                {
+                    counter++;
 
-                Console.WriteLine($"{counter}. {reader["Name"]} {reader["Age"]}");
+                    Console.WriteLine($"{counter}. {reader["Name"]} {reader["Age"]}");
+                }
             }
 
             if (counter == 0)
@@ -319,11 +323,12 @@ namespace ADO.NET
                                                             ORDER BY COUNT(mv.VillainId)", connection);
 
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            using (SqlDataReader reader = command.ExecuteReader())
             {
-                Console.WriteLine($"{reader[0]} => {reader[1]}");
+                while (reader.Read())
+                {
+                    Console.WriteLine($"{reader[0]} => {reader[1]}");
+                }
             }
         }
 
