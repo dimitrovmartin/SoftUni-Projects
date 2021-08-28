@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ADO.NET
 {
@@ -12,6 +14,170 @@ namespace ADO.NET
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+            }
+        }
+
+        private static void IncreaseAgeStoredProcedure(SqlConnection connection)
+        {
+            int id = int.Parse(Console.ReadLine());
+
+            SqlCommand command = new SqlCommand($"EXEC usp_GetOlder @id = {id}", connection);
+
+            command.ExecuteNonQuery();
+
+            command = new SqlCommand($"SELECT Name, Age FROM Minions WHERE Id = {id}", connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine($"{reader[0]} - {reader[1]} years old");
+            }
+        }
+
+        private static void IncreaseMinionAge(SqlConnection connection)
+        {
+            List<string> minionNames = new List<string>();
+
+            SqlCommand command = new SqlCommand(@"UPDATE Minions
+   SET Name = UPPER(LEFT(Name, 1)) + SUBSTRING(Name, 2, LEN(Name)), Age += 1
+ WHERE Id = @Id", connection);
+
+            int[] ids = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+
+            foreach (var id in ids)
+            {
+                SqlParameter parameter = new SqlParameter("@Id", id);
+
+                command.Parameters.Add(parameter);
+                command.ExecuteNonQuery();
+                command.Parameters.Remove(parameter);
+            }
+
+            command = new SqlCommand("SELECT Name, Age FROM Minions", connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                minionNames.Add(reader[0].ToString() + " " + reader[1].ToString());
+            }
+
+            Console.WriteLine(string.Join(Environment.NewLine, minionNames));
+        }
+
+        private static void PrintAllMinionNames(SqlConnection connection)
+        {
+            List<string> minionNames = new List<string>();
+
+            SqlCommand command = new SqlCommand("SELECT Name FROM Minions", connection);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                minionNames.Add(reader[0].ToString());
+            }
+
+            int counter = 0;
+
+            while (minionNames.Any())
+            {
+                if (counter % 2 == 0)
+                {
+                    Console.WriteLine(minionNames[0]);
+
+                    minionNames.RemoveAt(0);
+                }
+                else
+                {
+                    Console.WriteLine(minionNames[minionNames.Count - 1]);
+
+                    minionNames.RemoveAt(minionNames.Count - 1);
+                }
+
+                counter++;
+            }
+        }
+
+        private static void RemoveVillain(SqlConnection connection)
+        {
+            int villainId = int.Parse(Console.ReadLine());
+
+            SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Villains WHERE Id = @villainId", connection);
+            command.Parameters.Add(new SqlParameter("@villainId", villainId));
+            int count = (int)command.ExecuteScalar();
+
+            if (count == 0)
+            {
+                Console.WriteLine($"No such villain was found.");
+            }
+            else
+            {
+                command = new SqlCommand("SELECT Name FROM Villains WHERE Id = @villainId", connection);
+                command.Parameters.Add(new SqlParameter("@villainId", villainId));
+
+                string name = command.ExecuteScalar().ToString();
+
+                command = new SqlCommand(@"DELETE FROM MinionsVillains 
+      WHERE VillainId = @villainId", connection);
+
+                command.Parameters.Add(new SqlParameter("@villainId", villainId));
+
+                int affectedRows = command.ExecuteNonQuery();
+
+                command = new SqlCommand(@"DELETE FROM Villains
+      WHERE Id = @villainId", connection);
+
+                command.Parameters.Add(new SqlParameter("@villainId", villainId));
+
+                command.ExecuteNonQuery();
+
+                Console.WriteLine($"{name} was deleted.");
+                Console.WriteLine($"{affectedRows} minions was released.");
+            }
+        }
+
+        private static void ChangeTownNamesCasing(SqlConnection connection)
+        {
+            string country = Console.ReadLine();
+
+            SqlCommand command = new SqlCommand(@"UPDATE Towns
+                                                        SET Name = UPPER(Name)
+                                                        WHERE CountryCode = (SELECT c.Id FROM Countries AS c WHERE c.Name = @countryName)", connection);
+
+            command.Parameters.Add(new SqlParameter("@countryName", country));
+
+            int affectedRows = command.ExecuteNonQuery();
+
+            if (affectedRows > 0)
+            {
+                Console.WriteLine($"{affectedRows} town names were affected.");
+
+                command = new SqlCommand(@"SELECT t.Name 
+   FROM Towns as t
+   JOIN Countries AS c ON c.Id = t.CountryCode
+  WHERE c.Name = @countryName", connection);
+
+                command.Parameters.Add(new SqlParameter("@countryName", country));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<string> towns = new List<string>();
+
+                while (reader.Read())
+                {
+                    towns.Add(reader[0].ToString());
+                }
+
+                Console.WriteLine($"[{string.Join(", ", towns)}]");
+            }
+            else
+            {
+                Console.WriteLine("No town names were affected.");
             }
         }
 
@@ -95,7 +261,7 @@ namespace ADO.NET
             Console.WriteLine($"Successfully added {minionName} to be minion of {villainName}.");
         }
 
-        private static void MinionNames(SqlConnection connection) 
+        private static void MinionNames(SqlConnection connection)
         {
             string id = Console.ReadLine();
 
