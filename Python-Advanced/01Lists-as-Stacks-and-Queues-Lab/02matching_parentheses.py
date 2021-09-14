@@ -1,12 +1,12 @@
-problem = input()
+expression = input()
 stack = []
 
-for i in range(len(problem)):
-    current_symbol = problem[i]
-
-    if current_symbol == "(":
-        stack.append(i)
-    elif current_symbol == ")":
+for index, value in enumerate(expression):
+    if value == "(":
+        stack.append(index)
+    elif value == ")":
         start_index = stack.pop()
+        end_index = index
 
-        print(problem[start_index:i+1])
+        print(expression[start_index:end_index+1])
+

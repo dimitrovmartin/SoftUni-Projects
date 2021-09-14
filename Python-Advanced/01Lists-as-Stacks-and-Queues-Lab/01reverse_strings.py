@@ -1,7 +1,10 @@
-stack = list(input())
+string = input()
+stack = list(string)
+
 reversed_string = []
 
-while len(stack) > 0:
+while stack:
     reversed_string.append(stack.pop())
 
 print("".join(reversed_string))
+

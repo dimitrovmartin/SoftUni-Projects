@@ -1,17 +1,20 @@
 from collections import deque
-queue = deque(input().split())
-allowed_tosses = int(input())
-current_tosses = 0
 
-while len(queue) > 1:
-    current_tosses += 1
-    child = queue.popleft()
+children = input().split()
+tosses = int(input())
 
-    if current_tosses == allowed_tosses:
+hot_potato = deque(children)
+counter = 0
+
+while len(hot_potato) > 1:
+    counter += 1
+    child = hot_potato.popleft()
+
+    if counter == tosses:
         print(f"Removed {child}")
-        
-        current_tosses = 0
+        counter = 0
     else:
-        queue.append(child)
+        hot_potato.append(child)
 
-print(f"Last is {queue.popleft()}")
+last_child = hot_potato.popleft()
+print(f"Last is {last_child}")
