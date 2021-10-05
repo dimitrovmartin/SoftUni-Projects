@@ -7,3 +7,4 @@ for _ in range(5):
 
     if number <= 0:
         raise ValueCannotBeNegative
+
