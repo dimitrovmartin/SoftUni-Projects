@@ -1,5 +1,3 @@
-# 57/100
-
 def is_valid_coordinates(row, col, n):
     return 0 <= row < n and 0 <= col < n
 
@@ -28,6 +26,12 @@ while True:
     points = 0
 
     if not is_valid_coordinates(row, col, rows):
+        if current_player == player_one:
+            player_one_throws += 1
+        else:
+            player_two_throws += 1
+
+        current_player, other_player = other_player, current_player
         continue
 
     hitted_position = matrix[row][col]
