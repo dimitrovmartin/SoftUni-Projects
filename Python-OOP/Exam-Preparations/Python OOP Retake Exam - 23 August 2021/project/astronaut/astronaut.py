@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
+from project.common.validator import Validator
+
 
 class Astronaut(ABC):
-    DEFAULT_BREATH = 10
     @abstractmethod
     def __init__(self, name, oxygen):
         self.name = name
@@ -15,12 +16,11 @@ class Astronaut(ABC):
 
     @name.setter
     def name(self, value):
-        if not value or not value.strip():
-            raise ValueError('Astronaut name cannot be empty string or whitespace!')
+        Validator.raise_if_str_is_empty_or_whitespace(value, 'Astronaut name cannot be empty string or whitespace!')
         self.__name = value
 
     def breathe(self):
-        self.oxygen -= self.DEFAULT_BREATH
+        self.oxygen -= 10
 
     def increase_oxygen(self, amount):
         self.oxygen += amount

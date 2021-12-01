@@ -1,3 +1,6 @@
+from project.common.validator import Validator
+
+
 class Planet:
     def __init__(self, name):
         self.name = name
@@ -9,7 +12,5 @@ class Planet:
 
     @name.setter
     def name(self, value):
-        if not value or not value.strip():
-            raise ValueError('Astronaut name cannot be empty string or whitespace!')
+        Validator.raise_if_str_is_empty_or_whitespace(value, 'Planet name cannot be empty string or whitespace!')
         self.__name = value
-

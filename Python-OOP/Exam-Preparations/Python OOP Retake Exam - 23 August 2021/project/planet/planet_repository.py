@@ -9,7 +9,7 @@ class PlanetRepository:
         self.planets.remove(planet)
 
     def find_by_name(self, name):
-        planet = [planet for planet in self.planets if planet.name == name]
-
-        if planet:
-            return planet[0]
+        for planet in self.planets:
+            if planet.name == name:
+                return planet
+        return None

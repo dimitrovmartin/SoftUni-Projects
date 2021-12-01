@@ -16,16 +16,11 @@ class SpaceStation:
 
     def add_astronaut(self, astronaut_type, name):
         if self.astronaut_repository.find_by_name(name):
-            return f'{name} is already added'
+            return f'{name} is already added.'
 
-        if astronaut_type == 'Biologist':
-            self.astronaut_repository.add(Biologist(name))
-        elif astronaut_type == 'Geodesist':
-            self.astronaut_repository.add(Geodesist(name))
-        elif astronaut_type == 'Meteorologist':
-            self.astronaut_repository.add(Meteorologist(name))
-        else:
-            raise Exception('Astronaut type is not valid!')
+        astronaut = self.__create_astronaut(astronaut_type, name)
+        self.astronaut_repository.add(astronaut)
+
         return f'Successfully added {astronaut_type}: {name}.'
 
     def add_planet(self, name, items):
@@ -43,11 +38,10 @@ class SpaceStation:
     def retire_astronaut(self, name):
         astronaut = self.astronaut_repository.find_by_name(name)
 
-        if not astronaut:
+        if astronaut is None:
             raise Exception(f"Astronaut {name} doesn't exist!")
 
         self.astronaut_repository.remove(astronaut)
-
         return f"Astronaut {name} was retired!"
 
     def recharge_oxygen(self):
@@ -57,34 +51,32 @@ class SpaceStation:
     def send_on_mission(self, planet_name):
         planet = self.planet_repository.find_by_name(planet_name)
 
-        if not planet:
+        if planet is None:
             raise Exception('Invalid planet name!')
 
-        astronauts = [astronaut for astronaut in self.astronaut_repository.astronauts if astronaut.oxygen > 30]
+        astronauts = self.astronaut_repository.find_astronauts_for_mission()
 
         if not astronauts:
             raise Exception('You need at least one astronaut to explore the planet!')
 
-        astronauts = list(sorted(astronauts, key=lambda x: x.oxygen, reverse=True))
+        participated_astronauts = 0
 
-        first_five = []
-        [first_five.append(astronaut) for astronaut in astronauts if len(first_five) <= 5]
+        for astronaut in astronauts:
+            if not planet.items:
+                break
 
-        for astronaut in first_five:
-            while astronaut.oxygen > 0:
-                if planet.items:
-                    astronaut.backpack.append(planet.items.pop())
-                    astronaut.breathe()
-                else:
-                    self.successful_missions += 1
-                    return f"Planet: {planet_name} was explored. {len(first_five)} astronauts participated in collecting items."
+            while astronaut.oxygen > 0 and planet.items:
+                astronaut.backpack.append(planet.items.pop())
+                astronaut.breathe()
+
+            participated_astronauts += 1
 
         if planet.items:
             self.unsuccessful_missions += 1
             return 'Mission is not completed.'
         else:
             self.successful_missions += 1
-            return f"Planet: {planet_name} was explored. {len(first_five)} astronauts participated in collecting items."
+            return f"Planet: {planet_name} was explored. {participated_astronauts} astronauts participated in collecting items."
 
     def report(self):
         report = []
@@ -99,3 +91,13 @@ class SpaceStation:
             report.append(f"Backpack items: {items}")
 
         return '\n'.join(report)
+
+    @staticmethod
+    def __create_astronaut(astronaut_type, name):
+        if astronaut_type == Biologist.__name__:
+            return Biologist(name)
+        elif astronaut_type == Geodesist.__name__:
+            return Geodesist(name)
+        elif astronaut_type == Meteorologist.__name__:
+            return Meteorologist(name)
+        raise Exception('Astronaut type is not valid!')
