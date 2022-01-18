@@ -1,5 +1,5 @@
 function solve(n, k) {
-    resultArr = []
+    let resultArr = []
 
     for (let i = 0; i < n; i++) {
         if (resultArr.length === 0) {

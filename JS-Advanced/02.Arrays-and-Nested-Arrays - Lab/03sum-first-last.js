@@ -3,7 +3,7 @@ function solve(arr){
         return arr[0];
     }
 
-    result = Number(arr.shift()) + Number(arr.pop());
+    let result = Number(arr.shift()) + Number(arr.pop());
 
     return result;
 }

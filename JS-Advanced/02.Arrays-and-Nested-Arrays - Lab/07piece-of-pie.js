@@ -1,6 +1,6 @@
 function solve(arr, firstTarget, secondTarget){
-    firstIndex = arr.indexOf(firstTarget);
-    secondIndex = arr.indexOf(secondTarget);
+    let firstIndex = arr.indexOf(firstTarget);
+    let secondIndex = arr.indexOf(secondTarget);
 
     arr = arr.slice(firstIndex, secondIndex + 1);
 

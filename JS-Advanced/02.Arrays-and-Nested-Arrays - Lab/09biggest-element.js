@@ -1,6 +1,6 @@
 function solve(matrix){
 
-    biggestElement = Number.MIN_VALUE;
+    let biggestElement = Number.MIN_VALUE;
 
     matrix.forEach((x)=> x.forEach(function(y){
          if (y > biggestElement){
