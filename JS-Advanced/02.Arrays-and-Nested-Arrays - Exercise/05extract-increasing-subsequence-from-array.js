@@ -1,4 +1,5 @@
 function solve(arr){
+    
     let filteredArr = [arr[0]];
 
    if (arr.length > 1) {
