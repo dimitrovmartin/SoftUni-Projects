@@ -11,4 +11,3 @@ function extract(elementId) {
   
     return result.join('; ');
   }
-  

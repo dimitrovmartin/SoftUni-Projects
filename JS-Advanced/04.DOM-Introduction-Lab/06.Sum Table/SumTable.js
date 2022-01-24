@@ -7,5 +7,4 @@ function sumTable() {
       total += Number(cost);
     }
     document.getElementById("sum").textContent = total;
-  }
-  
+}
