@@ -1,0 +1,67 @@
+/* 
+    Article component
+*/
+
+.article{
+    width: 300px;
+}
+
+.article .article__img_wrapper{
+    aspect-ratio: 1 / 1;
+    border-radius: 21px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.article .article__img_wrapper .article__img{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+
+.article .article__title{
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 28px;
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+
+.article .article__desc{
+    font-size: 14px;
+    font-weight: 300;
+    color: #718096;
+    line-height: 22px;
+}
+
+/* 
+    Tag component
+*/
+
+.tag{
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.tag.tag--info{
+    background-color: #90cdf4;
+    color: #2c5282;
+}
+
+.tag.tag--success{
+    background-color: #9ae6b4;
+    color: #276749;
+}
+
+.tag.tag--warn{
+    background-color: #faf089;
+    color: #975a16;
+}
+
+.tag.tag--danger{
+    background-color: #feb2b2;
+    color: #9b2c2c;
+}
