@@ -417,7 +417,7 @@ describe('E2E tests', function () {
 
     });
 
-    describe('Check Catalog Page with User [ 4 Points ]', async () => {
+    describe('Check Catalog Page with User [ 5 Points ]', async () => {
 
         // Login user
         beforeEach(async () => {
@@ -433,7 +433,7 @@ describe('E2E tests', function () {
             await page.waitForTimeout(interval);
         });
 
-        it('Check Catalog Page with 0 albums [ 2 Points ]', async () => {
+        it('Check Catalog Page with 0 albums [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.catalog);
             get([]);
 
@@ -444,7 +444,7 @@ describe('E2E tests', function () {
             expect(visible).to.be.true;
         });
 
-        it('Check Catalog Page with 2 albums [ 2 Points ]', async () => {
+        it('Check Catalog Page with 2 albums [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.catalog);
             get(mockData.catalog.slice(0, 2));
 
@@ -459,23 +459,9 @@ describe('E2E tests', function () {
         });
     });
 
-    describe('Check Catalog Page with Guest [ 6 Points ]', async () => {
+    describe('Check Catalog Page with Guest [ 5 Points ]', async () => {
 
-        it('Check Catalog Page with 0 albums [ 2 Points ]', async () => {
-            const { get } = await handle(endpoints.catalog);
-            get([]);
-
-            await page.goto(host);
-            await page.waitForTimeout(interval);
-
-            await page.click('text=Catalog');
-            await page.waitForTimeout(interval);
-
-            const visible = await page.isVisible('text=No Albums in Catalog!');
-            expect(visible).to.be.true;
-        });
-
-        it('Check Catalog Page with 2 albums [ 2 Points ]', async () => {
+        it('Check Catalog Page with 2 albums [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.catalog);
             get(mockData.catalog.slice(0, 2));
 
@@ -493,7 +479,7 @@ describe('E2E tests', function () {
             expect(titles[1]).to.contains(`${mockData.catalog[1].name}`);
         });
 
-        it('Guest does NOT see details buttons [ 2 Points ]', async () => {
+        it('Guest does NOT see details buttons [ 2.5 Points ]', async () => {
             await page.goto(host);
             await page.waitForTimeout(interval);
 
@@ -504,9 +490,9 @@ describe('E2E tests', function () {
         });
     });
 
-    describe('Search Page [ 10 Points ]', async () => {
+    describe('Search Page [ 15 Points ]', async () => {
 
-        it('Show no matches for Guest [ 1 Points ]', async () => {
+        it('Show no matches for Guest [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.search('Queen'));
             get([]);
 
@@ -523,7 +509,7 @@ describe('E2E tests', function () {
             expect(await page.isVisible('text=No result.')).to.be.true;
         });
 
-        it('Show results with 2 albums for Guest [ 2 Points ]', async () => {
+        it('Show results with 2 albums for Guest [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.search('Name'));
             get(mockData.catalog.slice(0, 2));
             
@@ -544,7 +530,7 @@ describe('E2E tests', function () {
             expect(matches[1]).to.contains(`Name: ${mockData.catalog[1].name}`);
         });
 
-        it('No Details button for Guest [ 2 Points ]', async () => {
+        it('No Details button for Guest [ 2.5 Points ]', async () => {
             const { get } = await handle(endpoints.search('Name'));
             get(mockData.catalog.slice(0, 1));
             
@@ -566,7 +552,7 @@ describe('E2E tests', function () {
             expect(await page.isVisible('text="Details"')).to.be.false;
         });
         
-        it('Show no matches for Users [ 1 Points ]', async () => {
+        it('Show no matches for Users [ 2.5 Points ]', async () => {
             // Login user
             const data = mockData.users[0];
             await page.goto(host);
@@ -596,7 +582,7 @@ describe('E2E tests', function () {
             expect(await page.isVisible('text=No result.')).to.be.true;
         });
 
-        it('Show results with 2 albums for Users [ 2 Points ]', async () => {
+        it('Show results with 2 albums for Users [ 2.5 Points ]', async () => {
             // Login user
             const data = mockData.users[0];
             await page.goto(host);
@@ -630,7 +616,7 @@ describe('E2E tests', function () {
             expect(matches[1]).to.contains(`Name: ${mockData.catalog[1].name}`);
         });
 
-        it('Show Details button for User [ 2 Points ]', async () => {
+        it('Show Details button for User [ 2.5 Points ]', async () => {
             // Login user
             const data = mockData.users[0];
             await page.goto(host);
